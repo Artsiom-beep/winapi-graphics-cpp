@@ -1,4 +1,4 @@
-# WinAPI Graphics (C++)
+# 🙂 WinAPI Smiley Animation (C++)
 
 Small experiments with raw Win32 GDI graphics — no frameworks, just `WndProc`, `WM_PAINT` and timers.
 
