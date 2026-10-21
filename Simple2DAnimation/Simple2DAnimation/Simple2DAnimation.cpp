@@ -7,7 +7,7 @@ const int maxRadius = 100; // Максимальный радиус смайли
 
 // Прототипы функций
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
-void DrawSquare(HDC hdc, int x, int y, int x2, int y2);
+void DrawSmile(HDC hdc, int x, int y, int radius);
 
 int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow) {
     WNDCLASSEX wcex;
@@ -54,7 +54,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
     switch (message) {
     case WM_PAINT:
         hdc = BeginPaint(hWnd, &ps);
-        DrawSquare(hdc, 200, 200, 500, 500);
+        {
+            RECT rc;
+            GetClientRect(hWnd, &rc);
+            DrawSmile(hdc, rc.right / 2, rc.bottom / 2, smileRadius); // Рисуем смайлик в центре окна
+        }
         EndPaint(hWnd, &ps);
         break;
     case WM_TIMER:
@@ -78,7 +82,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 
 void DrawSmile(HDC hdc, int x, int y, int radius) {
     // Рисуем лицо
-    Rectangle(hdc, x - radius, y - radius, x + radius, y + radius);
+    Ellipse(hdc, x - radius, y - radius, x + radius, y + radius);
 
     // Рисуем глаза
     Ellipse(hdc, x - radius / 3, y - radius / 3, x - radius / 6, y - radius / 6);
